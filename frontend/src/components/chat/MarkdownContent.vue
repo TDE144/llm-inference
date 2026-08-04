@@ -47,7 +47,12 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <div ref="containerRef" class="markdown-content" data-testid="markdown"></div>
+  <div
+    ref="containerRef"
+    class="markdown-content"
+    data-testid="markdown"
+    v-html="html"
+  ></div>
 </template>
 
 <style>
