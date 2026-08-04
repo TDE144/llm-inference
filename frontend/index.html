@@ -2,8 +2,25 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>LLM Chat</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta id="theme-color-meta" name="theme-color" content="#1e1f24" />
+    <title>DickPeek</title>
+    <script>
+      // Resolve the saved theme before first paint to avoid a wrong-theme flash.
+      (function () {
+        var key = 'chat-theme'
+        var value = 'system'
+        try {
+          var stored = window.localStorage.getItem(key)
+          if (stored === 'light' || stored === 'dark' || stored === 'system') {
+            value = stored
+          }
+        } catch (e) {
+          /* storage unavailable — fall back to system */
+        }
+        document.documentElement.setAttribute('data-theme', value)
+      })()
+    </script>
   </head>
   <body>
     <div id="app"></div>
