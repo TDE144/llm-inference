@@ -18,6 +18,10 @@ DEFAULT_SYSTEM = (
     "Answer the user's questions clearly and accurately."
 )
 
+# Model context is 2048 tokens; keep output well under that so that
+# prompt + generated tokens fit within the context window.
+DEFAULT_MAX_TOKENS = 512
+
 
 class ChatMessage(BaseModel):
     role: str = Field(pattern="^(user|assistant|system)$")
@@ -78,7 +82,7 @@ def create_app(settings: Settings | None = None) -> FastAPI:
                 messages,
                 model,
                 temperature=req.temperature if req.temperature is not None else 0.7,
-                max_tokens=req.max_tokens or 2048,
+                max_tokens=req.max_tokens or DEFAULT_MAX_TOKENS,
             )
         except (LLMError, Exception) as exc:
             raise HTTPException(status_code=502, detail=str(exc)) from exc
@@ -96,7 +100,7 @@ def create_app(settings: Settings | None = None) -> FastAPI:
                 messages,
                 req.model or "",
                 temperature=req.temperature if req.temperature is not None else 0.7,
-                max_tokens=req.max_tokens or 2048,
+                max_tokens=req.max_tokens or DEFAULT_MAX_TOKENS,
             ):
                 yield event
 

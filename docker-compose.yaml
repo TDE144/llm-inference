@@ -1,0 +1,35 @@
+services:
+  vllm:
+    container_name: vllm
+    image: vllm/vllm-openai:latest
+    gpus: all
+    environment:
+      VLLM_USE_V2_MODEL_RUNNER: "0"
+    ports:
+      - "8000:8000"
+    volumes:
+      - huggingface-cache:/root/.cache/huggingface
+    command:
+      - --model
+      - Qwen/Qwen2.5-0.5B-Instruct
+      - --host
+      - "0.0.0.0"
+      - --port
+      - "8000"
+      - --gpu-memory-utilization
+      - "0.7"
+      - --max-model-len
+      - "8192"
+  app:
+    container_name: app
+    build:
+      context: .
+      dockerfile: dockerfile
+    ports:
+      - "8080:8080"
+    environment:
+      VLLM_BASE_URL: http://vllm:8000/v1
+      VLLM_MODEL: Qwen/Qwen2.5-0.5B-Instruct
+
+volumes:
+  huggingface-cache:
