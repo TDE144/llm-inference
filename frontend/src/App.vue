@@ -48,7 +48,7 @@ function onStop() {
 <template>
   <div class="app-layout">
     <ChatHeader
-      :app-name="'Assistant'"
+      :app-name="'DickPick'"
       :connection="chat.connection.value"
       :model="chat.model.value"
       :generating="chat.isGenerating.value"

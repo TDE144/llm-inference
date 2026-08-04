@@ -1,3 +1,12 @@
+/* Comfortaa — used for the app brand name (matches the logo type). */
+@font-face {
+  font-family: "Comfortaa";
+  src: url("../assets/fonts/Comfortaa-var.woff2") format("woff2");
+  font-weight: 300 700;
+  font-style: normal;
+  font-display: swap;
+}
+
 :root {
   /* Spacing */
   --space-1: 4px;
@@ -20,6 +29,8 @@
   /* Typography */
   --font-sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial,
     sans-serif;
+  --font-brand: "Comfortaa", system-ui, -apple-system, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif;
   --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas,
     "Liberation Mono", monospace;
   --font-size-xs: 12px;

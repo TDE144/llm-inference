@@ -1,4 +1,6 @@
 <script setup>
+import logo from '../../../img/logo.png'
+
 const emit = defineEmits(['suggest'])
 
 const suggestions = [
@@ -28,6 +30,7 @@ function suggest(prompt) {
 <template>
   <div class="empty" role="presentation">
     <div class="empty-inner">
+      <img class="empty-logo" :src="logo" alt="DickPick logo" />
       <h2 class="empty-title">Start a conversation</h2>
       <p class="empty-sub">Ask anything — the assistant responds live.</p>
 
@@ -64,11 +67,20 @@ function suggest(prompt) {
   text-align: center;
 }
 
+.empty-logo {
+  width: 64px;
+  height: 64px;
+  margin: 0 auto var(--space-4);
+  border-radius: var(--radius-lg);
+  display: block;
+}
+
 .empty-title {
   margin: 0 0 var(--space-2);
+  font-family: var(--font-brand);
   font-size: var(--font-size-xl);
-  font-weight: 600;
-  color: var(--color-text-primary);
+  font-weight: 700;
+  color: var(--color-brand);
 }
 
 .empty-sub {

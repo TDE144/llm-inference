@@ -2,6 +2,7 @@
 import ConnectionStatus from './ConnectionStatus.vue'
 import ThemeSwitcher from './ThemeSwitcher.vue'
 import { IconPlus } from '../icons/index.js'
+import logo from '../../../img/logo.png'
 
 defineProps({
   appName: { type: String, default: 'Assistant' },
@@ -17,7 +18,10 @@ const emit = defineEmits(['new-chat', 'update:theme'])
 <template>
   <header class="chat-header">
     <div class="header-inner">
-      <h1 class="header-title">{{ appName }}</h1>
+      <div class="brand">
+        <img class="brand-logo" :src="logo" width="28" height="28" alt="DickPick logo" />
+        <h1 class="header-title">{{ appName }}</h1>
+      </div>
 
       <ConnectionStatus
         :connection="connection"
@@ -62,12 +66,28 @@ const emit = defineEmits(['new-chat', 'update:theme'])
   gap: var(--space-4);
 }
 
+.brand {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-width: 0;
+}
+
+.brand-logo {
+  border-radius: var(--radius-sm);
+  background: var(--color-surface);
+  flex-shrink: 0;
+}
+
 .header-title {
   margin: 0;
+  font-family: var(--font-brand);
   font-size: var(--font-size-xl);
-  font-weight: 600;
-  color: var(--color-text-primary);
+  font-weight: 700;
+  color: var(--color-brand);
   white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .header-actions {

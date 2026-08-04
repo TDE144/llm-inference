@@ -111,9 +111,9 @@ export function useChat({ scrollToBottom }) {
     }
   }
 
-  function send() {
+  function send(candidate) {
     if (isGenerating.value) return
-    const { trimmed, isEmpty } = idleText(input.value)
+    const { trimmed, isEmpty } = idleText(candidate ?? input.value)
     if (isEmpty) return
 
     const userMsg = createUserMessage(trimmed)
@@ -121,8 +121,11 @@ export function useChat({ scrollToBottom }) {
     messages.value.push(userMsg, assistantMsg)
     input.value = ''
 
+    // Operate on the reactive proxy stored in the array, not the raw object,
+    // so that streamed deltas (target.content/status) trigger re-renders.
+    const reactiveAssistant = messages.value[messages.value.length - 1]
     const history = buildHistory(messages.value)
-    runStream(assistantMsg, history)
+    runStream(reactiveAssistant, history)
   }
 
   function retry(assistant) {
