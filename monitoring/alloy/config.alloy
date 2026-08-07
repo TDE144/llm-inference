@@ -1,0 +1,41 @@
+discovery.docker "containers" {
+  host = "unix:///var/run/docker.sock"
+}
+
+discovery.relabel "docker_logs" {
+  targets = []
+
+  rule {
+    source_labels = ["__meta_docker_container_name"]
+    regex         = "/(.*)"
+    target_label  = "service_name"
+  }
+
+  // Build the docker-compose label so Grafana dashboards can filter
+  // logs by compose_service (e.g. "app-1"), matching <service>-<index>.
+  rule {
+    source_labels = [
+      "__meta_docker_container_label_com_docker_compose_service",
+      "__meta_docker_container_label_com_docker_compose_container_number",
+    ]
+    separator    = "-"
+    target_label = "compose_service"
+  }
+}
+
+loki.source.docker "containers" {
+  host          = "unix:///var/run/docker.sock"
+  targets       = discovery.docker.containers.targets
+  labels        = {"platform" = "docker"}
+  relabel_rules = discovery.relabel.docker_logs.rules
+
+  forward_to = [
+    loki.write.local.receiver,
+  ]
+}
+
+loki.write "local" {
+  endpoint {
+    url = "http://loki:3100/loki/api/v1/push"
+  }
+}
