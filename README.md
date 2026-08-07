@@ -1,6 +1,6 @@
 # llm-inference
 
-LLM inference сервис на базе vLLM с веб-чатом — сервят Qwen/Qwen2.5-0.5B-Instruct через OpenAI-совместимый API.
+LLM inference сервис на базе vLLM с веб-чатом.
 
 ## Запуск
 
